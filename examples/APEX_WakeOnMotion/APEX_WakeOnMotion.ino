@@ -15,7 +15,7 @@
  *
  */
  
-#include "ICM45605.h"
+#include "ICM45605S.h"
 
 // Instantiate an ICM456XX with LSB address set to 0
 ICM456xx IMU(Wire,0);

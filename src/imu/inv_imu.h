@@ -31,11 +31,11 @@ extern "C" {
 
 
 /* Device ID */
-#define ICM45605
+#define ICM45605S
 
 /* Device description */
-#define INV_IMU_STRING_ID            "ICM45605"
-#define INV_IMU_WHOAMI               0xE5
+#define INV_IMU_STRING_ID            "ICM45605S"
+#define INV_IMU_WHOAMI               0xEB
 #define INV_IMU_HIGH_FSR_SUPPORTED   0
 #define INV_IMU_FSYNC_SUPPORTED      1
 #define INV_IMU_USE_BASIC_SMD        0

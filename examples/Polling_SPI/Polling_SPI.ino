@@ -15,7 +15,7 @@
  *
  */
  
-#include "ICM45605.h"
+#include "ICM45605S.h"
 
 // Instantiate an ICM456XX with SPI interface and CS on pin 8
 ICM456xx IMU(SPI,8);
