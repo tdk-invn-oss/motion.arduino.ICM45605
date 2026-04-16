@@ -17,17 +17,16 @@
  
 #include "ICM45605.h"
 
+#define ICT1531X_CHIP_ID_REG  0x01
+
 // Instantiate an ICM456XX with LSB address set to 0
 ICM456xx IMU(Wire,0);
 
 volatile uint8_t irq_received = 0;
 
-void irq_handler(void) {
-  irq_received = 1;
-}
-
 void setup() {
   int ret;
+  uint8_t data;
   Serial.begin(115200);
   while(!Serial) {}
 
@@ -38,27 +37,17 @@ void setup() {
     Serial.println(ret);
     while(1);
   }
-  // Accel ODR = 50 Hz and APEX Pedometer enabled
-  IMU.startPedometer(2,irq_handler);
-
+  
+  delay(2000);
+  ret = IMU.setI2CMPassThrough();
+  ret |= IMU.getDataFromPassThrough(ICT1531X_CHIP_ID_REG, data);
+  Serial.print("Read data: ");
+  Serial.println(data);
 }
 
 void loop() {
-  // Wait for interrupt to read data Pedometer status
+  // Wait for interrupt to read data from fifo
   if(irq_received) {
-    uint32_t step_count=0;
-    float step_cadence=0;
-    char* activity;
     irq_received = 0;
-    IMU.getPedometer(step_count,step_cadence,activity);
-    Serial.print("Step_count:");
-    Serial.print(step_count);
-    Serial.print(",");
-    Serial.print("Step_cadence:");
-    Serial.print(step_cadence);
-    Serial.print(",");
-    Serial.print("activity:");
-    Serial.print(activity);
-    Serial.println("");
   }
 }
